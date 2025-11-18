@@ -3,20 +3,20 @@
 #include <algorithm>
 using namespace std;
 
-
 int pivot(vector<int>& vc, int ini, int fin) {
-	int pivtoval = vc[ini];
+	int pivotval = vc[ini];
 	int i = ini + 1;
 	int j = fin;
 	while (true) {
-		while (i <= fin && vc[i] <= pivtoval) {
+		while (i <= fin && vc[i] <= pivotval) {
 			i++;
 		}
-		while (j >= ini && vc[j] > pivtoval) {
+		while (j >= ini && vc[j] > pivotval) {
 			j--;
 		}
-
-		if (i >= j) break;
+		if (i >= j) {
+			break;
+		}
 		swap(vc[i], vc[j]);
 	}
 	swap(vc[ini], vc[j]);
@@ -43,26 +43,31 @@ int select(vector<int>& vc, int ini, int fin, int k) {
 }
 
 
+
 int mediana(vector<int>& vc) {
+	if (vc.size() == 0) {
+		return -1;
+	}
 	int n = vc.size();
-	if (n % 2 != 0) {
-		int m = (n + 1) / 2;
-		int s = select(vc, 0, n - 1, m);
-		return s;
+	if (vc.size() % 2 != 0) {
+		int k = (n + 1) / 2;
+		int mediana = select(vc, 0, n - 1, k);
+		return mediana;
 	}
 	else {
+		vector<int> copy = vc;
 		int k1 = n / 2;
 		int k2 = n + 1;
-		vector<int> copy = vc;
-		int s1 = select(vc, 0, n - 1, k1);
-		int s2 = select(copy, 0, n - 1, k2);
-		return (s1 + s2) / 2;
+		int partm1 = select(vc, 0, n - 1, k1);
+		int partm2 = select(copy, 0, n - 1, k2);
+		int mediana = (partm1 + partm2) / 2;
+		return mediana;
 	}
+
 }
 
-
 int main() {
-	vector<int> v = { 8, 2, 5, 9, 1, 6, 0};
+	vector<int> v = { 8, 2, 5, 9, 1, 6, 0 };
 
 	cout << "Vector original: ";
 	for (int x : v) cout << x << " ";
