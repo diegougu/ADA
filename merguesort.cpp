@@ -1,6 +1,6 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,9 +9,9 @@ void combinar(vector<int>& vc, int ini, int mid, int fin) {
 	vector<int> derecha(vc.begin() + mid + 1, vc.begin() + fin + 1);
 
 	int i = 0;
-	int j = 0; 
+	int j = 0;
 	int k = ini;
-
+	
 	while (i < izquierda.size() && j < derecha.size()) {
 		if (izquierda[i] <= derecha[j]) {
 			vc[k++] = izquierda[i++];
@@ -20,6 +20,7 @@ void combinar(vector<int>& vc, int ini, int mid, int fin) {
 			vc[k++] = derecha[j++];
 		}
 	}
+
 	while (i < izquierda.size()) {
 		vc[k++] = izquierda[i++];
 	}
@@ -27,17 +28,15 @@ void combinar(vector<int>& vc, int ini, int mid, int fin) {
 	while (j < derecha.size()) {
 		vc[k++] = derecha[j++];
 	}
-
 }
 
-
-void merguersort(vector<int>& vc, int ini, int fin) {
+void merguesort(vector<int>& vc, int ini, int fin) {
 	if (ini >= fin) {
 		return;
 	}
 	int mid = (ini + fin) / 2;
-	merguersort(vc, ini, mid);
-	merguersort(vc, mid + 1, fin);
+	merguesort(vc, ini, mid);
+	merguesort(vc, mid + 1, fin);
 	combinar(vc, ini, mid, fin);
 }
 
@@ -48,7 +47,7 @@ int main() {
 	for (int x : v) cout << x << " ";
 	cout << endl;
 
-	merguersort(v, 0, v.size() - 1);
+	merguesort(v, 0, v.size() - 1);
 
 	cout << "\nVector ordenado (MergeSort): ";
 	for (int x : v) cout << x << " ";
