@@ -3,6 +3,7 @@
 #include <algorithm>
 using namespace std;
 
+
 int pivot(vector<int>& vc, int ini, int fin) {
 	int pivotval = vc[ini];
 	int i = ini + 1;
@@ -14,11 +15,15 @@ int pivot(vector<int>& vc, int ini, int fin) {
 		while (j >= ini && vc[j] > pivotval) {
 			j--;
 		}
-		if (i >= j) break;
+		if (i >= j) {
+			break;
+		}
 		swap(vc[i], vc[j]);
 	}
+
 	swap(vc[ini], vc[j]);
 	return j;
+
 }
 
 void quicksort(vector<int>& vc, int ini, int fin) {
