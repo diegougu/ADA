@@ -5,9 +5,10 @@
 
 using namespace std;
 
-vector<int> combinar(const vector<int>& izq, const vector<int>& der) {
+vector<int> combinar(vector<int>& izq, vector<int>& der) {
 	unordered_set<int> hash;
 	vector<int> solve;
+
 	for (int i = 0; i < izq.size(); i++) {
 		auto e = hash.find(izq[i]);
 		if (e == hash.end()) {
@@ -23,10 +24,12 @@ vector<int> combinar(const vector<int>& izq, const vector<int>& der) {
 			hash.insert(der[i]);
 		}
 	}
+
 	return solve;
 }
 
-vector<int> eliminarrepeditos(const vector<int>& vc) {
+
+vector<int> elimarduplicados(vector<int>& vc) {
 	if (vc.size() <= 1) {
 		return vc;
 	}
@@ -35,8 +38,8 @@ vector<int> eliminarrepeditos(const vector<int>& vc) {
 	vector<int> izq(vc.begin(), vc.begin() + mid);
 	vector<int> der(vc.begin() + mid, vc.end());
 
-	izq = eliminarrepeditos(izq);
-	der = eliminarrepeditos(der);
+	izq = elimarduplicados(izq);
+	der = elimarduplicados(der);
 
 	return combinar(izq, der);
 }
@@ -45,7 +48,7 @@ vector<int> eliminarrepeditos(const vector<int>& vc) {
 int main() {
 	vector<int> A = { 4, 2, 9, 4, 2, 3, 9, 1, 7 };
 
-	vector<int> sinDuplicados = eliminarrepeditos(A);
+	vector<int> sinDuplicados = elimarduplicados(A);
 
 	cout << "Vector sin duplicados (orden no garantizado):\n";
 	for (int x : sinDuplicados)
