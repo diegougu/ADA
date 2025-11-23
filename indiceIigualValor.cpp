@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-bool indiceIigualValor(vector<int>& vc, int ini, int fin) {
+bool binarysearch(vector<int> vc, int ini, int fin, int oldmid) {
 	if (ini == fin) {
 		return vc[ini] == ini;
 	}
@@ -11,16 +12,19 @@ bool indiceIigualValor(vector<int>& vc, int ini, int fin) {
 	if (vc[mid] == mid) {
 		return true;
 	}
+	else if (mid == oldmid) {
+		return false;
+	}
 	else if (vc[mid] > mid) {
-		return indiceIigualValor(vc, ini, mid - 1);
+		return binarysearch(vc, ini, mid - 1, mid);
 	}
 	else {
-		return indiceIigualValor(vc, mid + 1, fin);
+		return binarysearch(vc, mid + 1, fin, mid);
 	}
 }
 
 int main() {
-	vector<int> vc = { -3, -1, 1, 4, 5 };
-	cout << indiceIigualValor(vc, 0, vc.size() - 1) << endl;
+	vector<int> vc = { -3, -1, 2, 4, 5 };
+	cout << binarysearch(vc, 0, vc.size() - 1, 0) << endl;
 
 }
