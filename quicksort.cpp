@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
 int pivot(vector<int>& vc, int ini, int fin) {
@@ -10,11 +9,10 @@ int pivot(vector<int>& vc, int ini, int fin) {
 	int j = fin;
 
 	while (true) {
-		while (i <= fin && vc[i] <= pivotval) { // aca cambias el <= por >= y ya es decendente
+		while (i <= fin && vc[i] <= pivotval) { // >=
 			i++;
 		}
-
-		while (j >= ini && vc[j] > pivotval) { // aca cambias el > por < y ya es decendente
+		while (j >= ini && vc[j] > pivotval) { // <
 			j--;
 		}
 
@@ -32,11 +30,11 @@ void quicksort(vector<int>& vc, int ini, int fin) {
 	if (ini >= fin) {
 		return;
 	}
-
 	int pos = pivot(vc, ini, fin);
 	quicksort(vc, ini, pos - 1);
 	quicksort(vc, pos + 1, fin);
 }
+
 
 int main() {
 	vector<int> v = { 9, 3, 7, 1, 6, 5, 2, 8, 4 };
