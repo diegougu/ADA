@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
 int pivot(vector<int>& vc, int ini, int fin) {
@@ -13,18 +12,14 @@ int pivot(vector<int>& vc, int ini, int fin) {
 		while (i <= fin && vc[i] <= pivotval) {
 			i++;
 		}
-
 		while (j >= ini && vc[j] > pivotval) {
 			j--;
 		}
-
 		if (i >= j) {
 			break;
 		}
-
 		swap(vc[i], vc[j]);
 	}
-
 	swap(vc[ini], vc[j]);
 	return j;
 }
@@ -36,7 +31,6 @@ int select(vector<int>& vc, int ini, int fin, int k) {
 
 	int pos = pivot(vc, ini, fin);
 	int orden = pos - ini + 1;
-
 	if (k == orden) {
 		return vc[pos];
 	}
@@ -46,30 +40,28 @@ int select(vector<int>& vc, int ini, int fin, int k) {
 	else {
 		return select(vc, pos + 1, fin, k - orden);
 	}
-
 }
 
-int mediana(vector<int> vc) {
+int mediana(vector<int>& vc) {
 	if (vc.empty()) {
-		return  -1;
+		return -1;
 	}
+	
 	int n = vc.size();
 	if (n % 2 != 0) {
 		int k = (n + 1) / 2;
-		int sol = select(vc, 0, n - 1, k);
-		return sol;
+		int solve = select(vc, 0, n - 1, k);
+		return solve;
 	}
 	else {
-		vector<int> vctemp = vc;
 		int k1 = n / 2;
 		int k2 = n + 1;
-
-		int sol1 = select(vc, 0, n - 1, k1);
-		int sol2 = select(vctemp, 0, n - 1, k2);
-		return (sol1 + sol2) / 2;
+		vector<int> copy = vc;
+		int solve1 = select(vc, 0, n - 1, k1);
+		int solve2 = select(copy, 0, n - 1, k2);
+		return (solve1 + solve2) / 2;
 	}
 }
-
 
 int main() {
 	vector<int> v = { 8, 2, 5, 9, 1, 6, 0 };
