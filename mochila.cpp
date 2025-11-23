@@ -1,58 +1,44 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <iterator>
+#include <vector>
 using namespace std;
 
 
-struct BenterP {
-	int i;
-	float bsp;
-};
-
-bool Greatbsp(BenterP a, BenterP b) {
-	return a.bsp > b.bsp;
+bool greaterpair(pair<float, int> a, pair<float, int> b) {
+	return a.first > b.first;
 }
 
-float mochila(float m, vector<float> p, vector<float> b, vector<float>& x) {
-	vector<BenterP> vc(p.size());
-	for (int i = 0; i < vc.size(); i++) {
-		vc[i].i = i;
-		vc[i].bsp = b[i] / p[i];
+vector<float> mochila(vector<float> p, vector<float> b, int M, int n) {
+	vector<float> solve(n, 0);
+	vector<pair<float, int>> bsp(n);
+	for (int i = 0; i < n; i++) {
+		bsp[i].first = b[i] / p[i];
+		bsp[i].second = i;
 	}
+	sort(bsp.begin(), bsp.end(), greaterpair);
+	int peso = 0;
 
-	float totalp = 0;
-	float totalb = 0;
-
-	sort(vc.begin(), vc.end(), Greatbsp);
-
-	for (auto e : vc) {
-		if (totalp + p[e.i] <= m) {
-			totalp += p[e.i];
-			totalb += b[e.i];
-			x[e.i] = 1;
+	for (int i = 0; i < bsp.size(); i++) {
+		if (peso + p[bsp[i].second] <= M) {
+			peso += p[bsp[i].second];
+			solve[bsp[i].second] = 1;
 		}
 		else {
-			float ope = (m - totalp) / p[e.i];
-			totalp = m;
-			totalb += b[e.i] * ope;
-			x[e.i] = ope;
+			float ope = (M - peso) / p[bsp[i].second];
+			peso = M;
+			solve[bsp[i].second] = ope;
 		}
 	}
-	return totalb;
-	
+	return solve;
 }
-
-
 
 int main() {
 	float M = 20;
 	vector<float> b = { 25,24,15 };
 	vector<float> p = { 18,15,10 };
-	vector<float> x(b.size());
-	float bTotal = mochila(M, p, b, x);
-	for (auto it : x) {
-		cout << it << " ";
+	int n = 3;
+	vector<float> solve = mochila(p, b, M, n);
+	for (int i = 0; i < solve.size(); i++) {
+		cout << solve[i] << " ";
 	}
-
 }
