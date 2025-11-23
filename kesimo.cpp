@@ -1,25 +1,29 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
 int pivot(vector<int>& vc, int ini, int fin) {
 	int pivotval = vc[ini];
 	int i = ini + 1;
 	int j = fin;
+	
 	while (true) {
-		while (i <= fin && vc[i] <= pivotval) {
+		while (i <= fin && vc[i] <= pivotval) { // >= kesimo mayor
 			i++;
 		}
-		while (j >= ini && vc[j] > pivotval) {
+
+		while (j >= ini && vc[j] > pivotval) { // <
 			j--;
 		}
+
 		if (i >= j) {
 			break;
 		}
+
 		swap(vc[i], vc[j]);
 	}
+
 	swap(vc[ini], vc[j]);
 	return j;
 }
@@ -32,7 +36,7 @@ int kesimo(vector<int>& vc, int ini, int fin, int k) {
 	int pos = pivot(vc, ini, fin);
 	int orden = pos - ini + 1;
 
-	if (k == orden) {
+	if (orden == k) {
 		return vc[pos];
 	}
 	else if (k < orden) {
