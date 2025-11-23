@@ -6,11 +6,13 @@ using namespace std;
 void combinar(vector<int>& vc, int ini, int mid, int fin) {
 	vector<int> izquierda(vc.begin() + ini, vc.begin() + mid + 1);
 	vector<int> derecha(vc.begin() + mid + 1, vc.begin() + fin + 1);
+
 	int i = 0;
 	int j = 0;
 	int k = ini;
+
 	while (i < izquierda.size() && j < derecha.size()) {
-		if (izquierda[i] <= derecha[j]) { //cambias en >= y es decendente xd 
+		if (izquierda[i] <= derecha[j]) { // >=
 			vc[k++] = izquierda[i++];
 		}
 		else {
