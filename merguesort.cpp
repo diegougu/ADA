@@ -3,16 +3,15 @@
 #include <algorithm>
 using namespace std;
 
+
 void combinar(vector<int>& vc, int ini, int mid, int fin) {
 	vector<int> izquierda(vc.begin() + ini, vc.begin() + mid + 1);
 	vector<int> derecha(vc.begin() + mid + 1, vc.begin() + fin + 1);
-
 	int i = 0;
 	int j = 0;
 	int k = ini;
-
 	while (i < izquierda.size() && j < derecha.size()) {
-		if (izquierda[i] <= derecha[j]) { // >=
+		if (izquierda[i] <= derecha[j]) {
 			vc[k++] = izquierda[i++];
 		}
 		else {
@@ -40,17 +39,9 @@ void merguesort(vector<int>& vc, int ini, int fin) {
 }
 
 int main() {
-	vector<int> v = { 9, 3, 7, 1, 6, 5, 2, 8, 4 };
-
-	cout << "Vector original: ";
-	for (int x : v) cout << x << " ";
-	cout << endl;
-
-	merguesort(v, 0, v.size() - 1);
-
-	cout << "\nVector ordenado (MergeSort): ";
-	for (int x : v) cout << x << " ";
-	cout << endl;
-
-	return 0;
+	vector<int> vc = { 10,1,2,4,7,9,8,6,5,3 };
+	merguesort(vc, 0, vc.size() - 1);
+	for (int i = 0; i < vc.size(); i++) {
+		cout << vc[i] << " ";
+	}
 }
