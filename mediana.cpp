@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
 int pivot(vector<int>& vc, int ini, int fin) {
@@ -12,12 +13,15 @@ int pivot(vector<int>& vc, int ini, int fin) {
 		while (i <= fin && vc[i] <= pivotval) {
 			i++;
 		}
+		
 		while (j >= ini && vc[j] > pivotval) {
 			j--;
 		}
+
 		if (i >= j) {
 			break;
 		}
+
 		swap(vc[i], vc[j]);
 	}
 	swap(vc[ini], vc[j]);
@@ -31,6 +35,7 @@ int select(vector<int>& vc, int ini, int fin, int k) {
 
 	int pos = pivot(vc, ini, fin);
 	int orden = pos - ini + 1;
+
 	if (k == orden) {
 		return vc[pos];
 	}
@@ -44,10 +49,10 @@ int select(vector<int>& vc, int ini, int fin, int k) {
 
 int mediana(vector<int>& vc) {
 	if (vc.empty()) {
-		return -1;
+		return  -1;
 	}
-	
 	int n = vc.size();
+
 	if (n % 2 != 0) {
 		int k = (n + 1) / 2;
 		int solve = select(vc, 0, n - 1, k);
