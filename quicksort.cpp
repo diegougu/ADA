@@ -1,30 +1,33 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
+
 
 int pivot(vector<int>& vc, int ini, int fin) {
 	int pivotval = vc[ini];
 	int i = ini + 1;
 	int j = fin;
-
 	while (true) {
-		while (i <= fin && vc[i] <= pivotval) { // >=
+		while (i <= fin && vc[i] <= pivotval) {
 			i++;
 		}
-		while (j >= ini && vc[j] > pivotval) { // <
+
+		while (j >= ini && vc[j] > pivotval) {
 			j--;
 		}
 
 		if (i >= j) {
 			break;
 		}
-
 		swap(vc[i], vc[j]);
 	}
+
 	swap(vc[ini], vc[j]);
 	return j;
 }
+
 
 void quicksort(vector<int>& vc, int ini, int fin) {
 	if (ini >= fin) {
@@ -35,19 +38,10 @@ void quicksort(vector<int>& vc, int ini, int fin) {
 	quicksort(vc, pos + 1, fin);
 }
 
-
 int main() {
-	vector<int> v = { 9, 3, 7, 1, 6, 5, 2, 8, 4 };
-
-	cout << "Vector original: ";
-	for (int x : v) cout << x << " ";
-	cout << endl;
-
-	quicksort(v, 0, v.size() - 1);
-
-	cout << "\nVector ordenado (QuickSort): ";
-	for (int x : v) cout << x << " ";
-	cout << endl;
-
-	return 0;
+	vector<int> vc = { 9,2,1,4,3,7,8,6,10,5 };
+	quicksort(vc, 0, vc.size() - 1);
+	for (int i = 0; i < vc.size(); i++) {
+		cout << vc[i] << " ";
+	}
 }
