@@ -1,19 +1,20 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
 int pivot(vector<int>& vc, int ini, int fin) {
 	int pivotval = vc[ini];
 	int i = ini + 1;
 	int j = fin;
-	
+
 	while (true) {
-		while (i <= fin && vc[i] <= pivotval) { // >= kesimo mayor
+		while (i <= fin && vc[i] <= pivotval) {
 			i++;
 		}
 
-		while (j >= ini && vc[j] > pivotval) { // <
+		while (j >= ini && vc[j] > pivotval) {
 			j--;
 		}
 
@@ -28,7 +29,7 @@ int pivot(vector<int>& vc, int ini, int fin) {
 	return j;
 }
 
-int kesimo(vector<int>& vc, int ini, int fin, int k) {
+int select(vector<int>& vc, int ini, int fin, int k) {
 	if (ini == fin) {
 		return vc[ini];
 	}
@@ -36,14 +37,14 @@ int kesimo(vector<int>& vc, int ini, int fin, int k) {
 	int pos = pivot(vc, ini, fin);
 	int orden = pos - ini + 1;
 
-	if (orden == k) {
+	if (k == orden) {
 		return vc[pos];
 	}
 	else if (k < orden) {
-		return kesimo(vc, ini, pos - 1, k);
+		return select(vc, ini, pos - 1, k);
 	}
 	else {
-		return kesimo(vc, pos + 1, fin, k - orden);
+		return select(vc, pos + 1, fin, k - orden);
 	}
 }
 
@@ -64,9 +65,8 @@ int main() {
 		return 0;
 	}
 
-	// Creamos una copia porque kesimo modifica el vector
 	vector<int> temp = vc;
-	int resultado = kesimo(temp, 0, n - 1, k);
+	int resultado = select(temp, 0, n - 1, k);
 
 	cout << "\nEl " << k << "-esimo menor elemento es: " << resultado << endl;
 
