@@ -5,50 +5,48 @@
 
 using namespace std;
 
-vector<int> combinar(vector<int>& izq, vector<int>& der) {
+
+vector<int> combinar(vector<int>& a, vector<int>& b) {
 	unordered_set<int> hash;
 	vector<int> solve;
-
-	for (int i = 0; i < izq.size(); i++) {
-		auto e = hash.find(izq[i]);
-		if (e == hash.end()) {
-			solve.push_back(izq[i]);
-			hash.insert(izq[i]);
+	for (int i = 0; i < a.size(); i++) {
+		auto ite = hash.find(a[i]);
+		if (ite == hash.end()) {
+			hash.insert(a[i]);
+			solve.push_back(a[i]);
 		}
 	}
 
-	for (int i = 0; i < der.size(); i++) {
-		auto e = hash.find(der[i]);
-		if (e == hash.end()) {
-			solve.push_back(der[i]);
-			hash.insert(der[i]);
+	for (int i = 0; i < b.size(); i++) {
+		auto ite = hash.find(b[i]);
+		if (ite == hash.end()) {
+			hash.insert(b[i]);
+			solve.push_back(b[i]);
 		}
 	}
-
+	
 	return solve;
 }
 
-
-vector<int> elimarduplicados(vector<int>& vc) {
+vector<int> repetidos(vector<int>& vc) {
 	if (vc.size() <= 1) {
 		return vc;
 	}
 
 	int mid = vc.size() / 2;
+
 	vector<int> izq(vc.begin(), vc.begin() + mid);
 	vector<int> der(vc.begin() + mid, vc.end());
-
-	izq = elimarduplicados(izq);
-	der = elimarduplicados(der);
+	izq = repetidos(izq);
+	der = repetidos(der);
 
 	return combinar(izq, der);
-}
-
+} 
 
 int main() {
 	vector<int> A = { 4, 2, 9, 4, 2, 3, 9, 1, 7 };
 
-	vector<int> sinDuplicados = elimarduplicados(A);
+	vector<int> sinDuplicados = repetidos(A);
 
 	cout << "Vector sin duplicados (orden no garantizado):\n";
 	for (int x : sinDuplicados)
