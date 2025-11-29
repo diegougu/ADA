@@ -1,35 +1,45 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
 
-bool greaterpair(pair<float, int> a, pair<float, int> b) {
-	return a.first > b.first;
+bool Ggreater(pair<int, float> a, pair<int, float> b) {
+	return a.second > b.second;
 }
 
-vector<float> mochila(vector<float> p, vector<float> b, int M, int n) {
-	vector<float> solve(n, 0);
-	vector<pair<float, int>> bsp(n);
-	for (int i = 0; i < n; i++) {
-		bsp[i].first = b[i] / p[i];
-		bsp[i].second = i;
-	}
-	sort(bsp.begin(), bsp.end(), greaterpair);
-	int peso = 0;
 
-	for (int i = 0; i < bsp.size(); i++) {
-		if (peso + p[bsp[i].second] <= M) {
-			peso += p[bsp[i].second];
-			solve[bsp[i].second] = 1;
+pair<float, vector<float>> mochila(vector<float>& p, vector<float> b, int n, int M) {
+	vector<pair<int, float>> bsobrep(n);
+	vector<float> solve(n, 0);
+
+	for (int i = 0; i < n; i++) {
+		bsobrep[i].first = i;
+		bsobrep[i].second = b[i] / p[i];
+	}
+
+	sort(bsobrep.begin(), bsobrep.end(), Ggreater);
+
+	int peso = 0;
+	float benificio = 0;
+
+	for (int i = 0; i < n; i++) {
+		if (peso + p[bsobrep[i].first] <= M) {
+			peso += p[bsobrep[i].first];
+			benificio += b[bsobrep[i].first];
+			solve[bsobrep[i].first] = 1;
 		}
 		else {
-			float ope = (M - peso) / p[bsp[i].second];
+			float ope = (M - peso) / p[bsobrep[i].first];
 			peso = M;
-			solve[bsp[i].second] = ope;
+			benificio += b[bsobrep[i].first] * ope;
+			solve[bsobrep[i].first] = ope;
 		}
 	}
-	return solve;
+
+	return { benificio, solve };
+
 }
 
 int main() {
@@ -37,8 +47,10 @@ int main() {
 	vector<float> b = { 25,24,15 };
 	vector<float> p = { 18,15,10 };
 	int n = 3;
-	vector<float> solve = mochila(p, b, M, n);
-	for (int i = 0; i < solve.size(); i++) {
-		cout << solve[i] << " ";
+	auto solve = mochila(p, b, n, M);
+	for (int i = 0; i < solve.second.size(); i++) {
+		cout << solve.second[i] << " ";
 	}
+	cout << endl;
+	cout << solve.first << " ";
 }
