@@ -1,25 +1,24 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
+vector<int> moneda(vector<int>& monedas, int plata) {
+	sort(monedas.begin(), monedas.end(), greater<int>());
 
-vector<int> moneda(vector<int>& monedas, int cambio) {
 	vector<int> solve;
-	sort(monedas.begin(), monedas.end(), greater<>());
-	while (cambio != 0) {
+
+	while (plata != 0) {
 		int resto = 0;
 		for (int i = 0; i < monedas.size(); i++) {
-			if (monedas[i] <= cambio && monedas[i] > resto) {
+			if (monedas[i] <= plata && monedas[i] > resto) {
 				resto = monedas[i];
 			}
 		}
-
+		plata -= resto;
 		solve.push_back(resto);
-		cambio -= resto;
 	}
-	
+
 	return solve;
 }
 
