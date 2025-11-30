@@ -9,37 +9,34 @@ bool Ggreater(pair<int, float> a, pair<int, float> b) {
 	return a.second > b.second;
 }
 
-
-pair<float, vector<float>> mochila(vector<float>& p, vector<float> b, int n, int M) {
+pair<float, vector<float>> mochila(vector<float>& p, vector<float>& b, int n, int M) {
 	vector<pair<int, float>> bsobrep(n);
-	vector<float> solve(n, 0);
-
 	for (int i = 0; i < n; i++) {
 		bsobrep[i].first = i;
 		bsobrep[i].second = b[i] / p[i];
 	}
+	vector<float> solve(n, 0);
+	
+	int pesototal = 0;
+	float beneficio = 0;
 
 	sort(bsobrep.begin(), bsobrep.end(), Ggreater);
 
-	int peso = 0;
-	float benificio = 0;
-
-	for (int i = 0; i < n; i++) {
-		if (peso + p[bsobrep[i].first] <= M) {
-			peso += p[bsobrep[i].first];
-			benificio += b[bsobrep[i].first];
+	for (int i = 0; i < bsobrep.size(); i++) {
+		if (pesototal + p[bsobrep[i].first] <= M) {
+			pesototal += p[bsobrep[i].first];
+			beneficio += b[bsobrep[i].first];
 			solve[bsobrep[i].first] = 1;
 		}
 		else {
-			float ope = (M - peso) / p[bsobrep[i].first];
-			peso = M;
-			benificio += b[bsobrep[i].first] * ope;
+			float ope = (M - pesototal) / p[bsobrep[i].first];
+			pesototal = M;
+			beneficio += b[bsobrep[i].first] * ope;
 			solve[bsobrep[i].first] = ope;
 		}
 	}
 
-	return { benificio, solve };
-
+	return { beneficio, solve };
 }
 
 int main() {
