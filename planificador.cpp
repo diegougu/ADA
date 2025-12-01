@@ -4,38 +4,36 @@
 
 using namespace std;
 
+
 bool Cgreater(pair<int, int> a, pair<int, int> b) {
 	return a.second > b.second;
 }
 
-pair<int, vector<int>> planificador(vector<int>& b, vector<int>& d, int maxD, int n) {
-	vector<pair<int, int>> byI(n);
-	
+pair<int, vector<int>> planificador(vector<int>& b, vector<int>& d, int dMax, int n) {
+	vector<pair<int, int>> orderB(n);
 	for (int i = 0; i < n; i++) {
-		byI[i].first = i;
-		byI[i].second = b[i];
+		orderB[i].first = i;
+		orderB[i].second = b[i];
 	}
 
-	vector<int> solve(maxD, 0);
+	int beneficio = 0;
+	vector<int> solve(dMax, 0);
 
-	int beneficiototal = 0;
-
-	for (int i = 0; i < byI.size(); i++) {
-		int pos = d[byI[i].first] - 1;
-
-		while (pos >= 0) {
-			if (solve[pos]) {
-				pos--;
+	for (int i = 0; i < orderB.size(); i++) {
+		int ite = d[orderB[i].first] - 1;
+		while (ite >= 0) {
+			if (solve[ite]) {
+				ite--;
 			}
 			else {
-				solve[pos] = byI[i].first + 1;
-				beneficiototal += b[byI[i].first];
+				beneficio += b[orderB[i].first];
+				solve[ite] = orderB[i].first + 1;
 				break;
 			}
 		}
 	}
 
-	return make_pair(beneficiototal, solve);
+	return { beneficio, solve };
 }
 
 int main() {
